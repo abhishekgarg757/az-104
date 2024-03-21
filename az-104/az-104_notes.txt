@@ -15,6 +15,9 @@ nic should be in same region and subsrctiption as vnet and vm (differnet rg can 
 
 azure recovery service vault should be in same region .blob data cannot be bacckup in RSV(it need a backup valut)
  BLOB and file service is supported with the import  job feature,Only the BLOB service is supported with the Export job feature
+For Azure Files, you can use Entra ID-based authentication (identity-based) and storage account keys.
+
+SAS tokens are typically used for blobs, queues, and tables, and stored access policies are specifically for controlling the start time, expiry time, and permissions for SAS tokens.
 
 for administrator , password reset policy is differnet : The two-gate policy requires two pieces of authentication data, such as an email address, authenticator app, or a phone number, and it prohibits security questions. Office and mobile voice calls are also prohibited for trial or free versions of Microsoft Entra ID.
 
@@ -94,6 +97,8 @@ We can enable encryption on a running IaaS virtual machine in Azure.
 
 A service tag represents a group of IP address prefixes from a given Azure service.
 
+Each resource or resource group can indeed have a maximum of 50 tag name/value pairs.
+
 Add a custom domain to your Azure
 Create a CNAME DNS record.
 Associate the custom domain with your CDN endpoint.
@@ -106,7 +111,7 @@ before you can delete a recovery services vault,  you need to stop the backup an
 you cant delete a recovery services vault, having registered storage accounts.,protected data sources (f, IaaS VMs, SQL databases, or Azure file shares).
 we can have one policy for the Azure virtual machines and one for Azure file shares. The Azure SQL Databases have a separate backup mechanism via automated backups
 policy exection sequuence : disable,modify,deny,audit
-
+Azure Policy definitions have modes like 'Indexed' and 'All'. There isn't a mode called 'DoNotAllow'.
 New-AzNetworkSecurityRuleConfig 
 New-AzNetworkSecurityGroup`
 Set-AzStorageBlobContent
@@ -142,6 +147,7 @@ d. Validate a Bicep file using Azure PowerShell without deploying it. Use the wh
 
 arm to bicep : bicep decomplie "template.json"
 bicep to arm : bicep build"template.bicep"
+vmsize : 'Standard_DS1_v2 '
 
 When mapping a custom domain to an Azure Web App, you typically use a CNAME record to point to the default domain provided by Azure for the app
 
@@ -149,6 +155,7 @@ Once you add a cloud endpoint to a Sync group, you can’t add any other shares 
 Once you add a server as a server endpoint with a particular file path, you can’t add the server as another endpoint with another path.
 
 you can’t enable Multi-Factor authentication for external users. There is no dependency as such on the phone numbers. : can be added in latest
+Microsoft Entra B2B collaboration allows organizations to work with external users by inviting them to their Microsoft Entra tenant
 
 the replication type of the storage account can be changed to Zone redundant storage only if the current replication technique is either LRS or GRS.
 
