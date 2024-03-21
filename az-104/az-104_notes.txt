@@ -1,0 +1,184 @@
+you cannot move app service to destination subscription  if destination have already any app service plan or web app
+for app service : Back up and restore are supported in Basic, Standard, Premium, and Isolated tiers. For Basic tier, only the production slot can be backed up and restored.
+aap serviec and web app should be in same region 
+.net core in linux ND windows , asp.net in windows only
+CNAME record is required to map www.cloudportalweb.com to prodwebapp1.azurewebsites.net.
+>﻿
+
+Cloud Device Administrator
+PRIVILEGED
+This is a privileged role. Users in this role can enable, disable, and delete devices in Microsoft Entra ID and read Windows 10 BitLocker keys. The role does not grant permissions to manage any other properties on the device. this role allow  to add   regisrterd/joined devices to any group 
+
+application gateway for public, load balance for private
+
+nic should be in same region and subsrctiption as vnet and vm (differnet rg can work )
+
+azure recovery service vault should be in same region .blob data cannot be bacckup in RSV(it need a backup valut)
+ BLOB and file service is supported with the import  job feature,Only the BLOB service is supported with the Export job feature
+
+for administrator , password reset policy is differnet : The two-gate policy requires two pieces of authentication data, such as an email address, authenticator app, or a phone number, and it prohibits security questions. Office and mobile voice calls are also prohibited for trial or free versions of Microsoft Entra ID.
+
+low priority vms , standard load balancer and scale setcannot be moved to other regions , 
+
+Microsoft Entra authentication allows users to connect to Azure using their Microsoft Entra credentials. Native Microsoft Entra authentication is only supported for OpenVPN protocol and also requires the use of the Azure VPN Client. The supported client operation systems are Windows 10 or later and macOS.
+
+
+
+network watcher :
+Create a virtual network
+Create a virtual machine with a network security group associated to its network interface
+Register Microsoft.insights provider
+Enable flow logging for a network security group using Network Watcher flow logs
+Download logged data
+View logged data
+
+Azure container app for :
+Deploying API endpoints
+Hosting background processing jobs
+Handling event-driven processing
+Running microservices
+
+Use az network private-endpoint-connection approve to approve a private endpoint connection.
+
+View template from deployment history: Go to the resource group for your new resource group.
+
+Azure AD Connect should be installed on a domain joined member server and not on a domain controller.
+
+Add "https://autologon.microsoftazuread-sso.com" to the Intranet zone settings by using Group Policy in Active Directory
+
+You can set an expiration policy only for Office 365 groups in Azure Active Directory
+
+You can  detach the data disks and attach them to another VM without stopping either of the VMs.
+
+
+ SLA of 99.5% uptime,  combination of Azure Managed Disks and Azure availability sets
+ SLA of 99.95% uptime,   Azure availability sets
+ SLA of 99.99% uptime,   multiple availability zone
+ 
+Global Administrator is automatically assigned to whoever creates the tenant first
+ only Global Administrator accounts can install and configure health agents
+
+read : Microsoft.Authorization/*/read
+
+enable collection of guest OS diagnostics data = to collect data on the performance counters VM
+
+Cloud-init is a widely used approach to customize a Linux VM as it boots for the first time. You can use cloud-init to install packages and write files, or to configure users and security. As cloud-init runs during the initial boot process,
+
+
+scaleset for new vm capacity :
+ az vmss scale --resource-group "skillcertpro-rg" --name skillcertproet --new-capacity 4
+ 
+Site-to-Site VPN connection : local network gateway : address rangewill be on prem ip
+Site to Site VPN connections provide connectivity between an On-prem network and Azure Virtual Network using an encrypted tunnel over the public internet
+point-site : If you make a change to the azure vnet, VPN client packages must be reinstalled again on on prem
+ 
+On-premise Active Directory, the user needs to have Enterprise Admin privileges.
+  
+file recovery steps from azure to on prem:
+1.First choose File Recovery
+2.Then choose the Recovery point and download the script
+3.And finally, if your workstation is Windows, you can use File explorer to browse through the files
+
+
+nsg : first subnet , then NIC
+ASGs is typically associated with NSGs.
+
+A VM can only be added to an availability set when it is created
+VM you wish to resize is part of an availability set, then you must stop all VMs in the availability set
+
+User administrator – can create and manage users and groups, and can reset passwords for users, Helpdesk administrators and User administrators.
+User Access Administrator – No access to the resource except the ability to change the access control.
+Adding a group to an administrative unit brings the group itself into the management scope of the administrative unit, but not the members of the group
+
+We can enable encryption on a running IaaS virtual machine in Azure.
+
+A service tag represents a group of IP address prefixes from a given Azure service.
+
+Add a custom domain to your Azure
+Create a CNAME DNS record.
+Associate the custom domain with your CDN endpoint.
+Verify the custom domain.
+
+new-AzDNSrecordSet
+Azure DNS private zone allows private name resolution between Azure Virtual Networks.
+
+before you can delete a recovery services vault,  you need to stop the backup and delete the backup data. , 
+you cant delete a recovery services vault, having registered storage accounts.,protected data sources (f, IaaS VMs, SQL databases, or Azure file shares).
+we can have one policy for the Azure virtual machines and one for Azure file shares. The Azure SQL Databases have a separate backup mechanism via automated backups
+policy exection sequuence : disable,modify,deny,audit
+
+New-AzNetworkSecurityRuleConfig 
+New-AzNetworkSecurityGroup`
+Set-AzStorageBlobContent
+
+Gatewaytransit is a peering property that lets one virtual network use the VPN gateway in the peered virtual network for cross-premises or VNet-to-VNet connectivity
+
+Uniform Mode: In uniform mode, all VM instances in the VMSS are identical, using the same image and configuration. Since our requirement is to add custom virtual machines to VMSS, we need to choose orchestration mode as Flexi,
+
+Azure Monitor Agent (AMA) replaces the Log Analytics agent (also known as MMA and OMS)
+
+default frequency of collecting platform metrics : 1 minute
+
+Azure Monitor Log Analytics allows you to query and analyze detailed records from various sources, making it suitable for analyzing system updates across VMs.
+
+In complete mode, the Resource Manager deletes resources in the resource group that aren't specified in the template.
+
+
+The Azure Backup vault was an older construct and has been superseded by the Recovery Services vault.
+
+In Entra ID, licenses can be assigned both to individual users and to groups. Licenses are not automatically provisioned for every user upon creation. Users can also have multiple licenses.
+License cannot be assigned to a user without a usage location specified.
+
+Azure Files provides the capability to take snapshots of SMB file shares. Share snapshots capture the share state at that point in time.
+
+bicep:
+1.Azure CLI can be used to directly convert ARM template JSON files to Bicep files.
+
+b. Bicep files can be deployed to Azure without first converting them to ARM templates, as Azure CLI and PowerShell can handle the transpilation for you.
+
+c. A Bicep file can also be translated to its equivalent ARM template, allowing users to see what the ARM JSON representation would look like.
+
+d. Validate a Bicep file using Azure PowerShell without deploying it. Use the what-if operation to verify that the Bicep file makes the changes that you expect.
+
+arm to bicep : bicep decomplie "template.json"
+bicep to arm : bicep build"template.bicep"
+
+When mapping a custom domain to an Azure Web App, you typically use a CNAME record to point to the default domain provided by Azure for the app
+
+Once you add a cloud endpoint to a Sync group, you can’t add any other shares as the cloud endpoint.
+Once you add a server as a server endpoint with a particular file path, you can’t add the server as another endpoint with another path.
+
+you can’t enable Multi-Factor authentication for external users. There is no dependency as such on the phone numbers. : can be added in latest
+
+the replication type of the storage account can be changed to Zone redundant storage only if the current replication technique is either LRS or GRS.
+
+kubenet : metro : pods have differnet ips that the vnet ,
+azure cni : highways : pods have same ips from the vnet ,
+set-azakscluster
+
+look back window over which metric values are checked, while configuring a static threshold metric alert rule ? : period
+ 
+If read only lock on resources only :Resources can be moved to another another resource group
+If read only lock on resources group only :Resources cannot  be moved to another another resource group
+You cannot move existing resources to the resource group having policy enabled. The policy is applied  also when creating or updating a resource.
+You can move the resourse from the rg having the policy applied 
+az-aks command to autoscale
+
+1 region : multiple datacentre
+avaiblity set in one datacentre only
+one avialbility zone : accross locations in one datacentre
+multiple avialbility zone : accross different datacentres, in one region
+
+Fault domains are used to define the group of virtual machines that share a common source and network switch. You can have up to 3 fault domains.
+Update domains are used to group virtual machines and physical hardware that can be rebooted at the same time. You can have up to 20 update domains.
+27 vms on 5 updaet domains: 27/5 = 5 it means 2 updaet domains have 6 and 3 update domins have 5 vms each
+
+Service endpoints allow you to restrict access to Azure PaaS services to specific VNets, making them suitable for securing Azure SQL Database access from a VNet.
+
+a. An "A" record maps a domain name to the IP address (IPv4) of the computer hosting the domain. It uses the domain name to find the IP address of a computer connected to the internet. In this case, we want mail.example.com to point directly to an IP address of your mail server.
+
+b. A CNAME (Canonical Name) record is a type of DNS record that maps an alias name to a true or canonical domain name. CNAME records are typically used to map a subdomain such as www or mail to the domain hosting that subdomain’s content.
+
+c. The MX (Mail Exchange) record is crucial for directing email to your domain, but it doesn't directly map to an IP address like the A or AAAA records. Instead, it points to a domain name (usually a subdomain like "mail.example.com").
+
+d. In Azure DNS, you can create a TXT record for various purposes. For example, you might need to create a TXT record to verify that you own the domain you want to add to Microsoft 365. Or, you might need to create a TXT record to validate a custom domain for your app service.
