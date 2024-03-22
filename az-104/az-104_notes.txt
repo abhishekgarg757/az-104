@@ -27,7 +27,7 @@ Microsoft Entra authentication allows users to connect to Azure using their Micr
 
 
 
-network watcher :
+network watcher : netwrok intrusions
 Create a virtual network
 Create a virtual machine with a network security group associated to its network interface
 Register Microsoft.insights provider
@@ -115,6 +115,9 @@ Azure Policy definitions have modes like 'Indexed' and 'All'. There isn't a mode
 New-AzNetworkSecurityRuleConfig 
 New-AzNetworkSecurityGroup`
 Set-AzStorageBlobContent
+powershell commands :
+get-azroledefination
+new-azroledefination
 
 Gatewaytransit is a peering property that lets one virtual network use the VPN gateway in the peered virtual network for cross-premises or VNet-to-VNet connectivity
 
@@ -189,3 +192,34 @@ b. A CNAME (Canonical Name) record is a type of DNS record that maps an alias na
 c. The MX (Mail Exchange) record is crucial for directing email to your domain, but it doesn't directly map to an IP address like the A or AAAA records. Instead, it points to a domain name (usually a subdomain like "mail.example.com").
 
 d. In Azure DNS, you can create a TXT record for various purposes. For example, you might need to create a TXT record to verify that you own the domain you want to add to Microsoft 365. Or, you might need to create a TXT record to validate a custom domain for your app service.
+
+Monitoring
+Topology view : shows you the resources in your virtual network and the relationships between them.
+Connection monitor  : allows you to monitor connectivity and latency between endpoints inside and outside Azure.,continous , average route time
+
+Network diagnostic tools:
+IP flow verify :allows you to detect traffic filtering issues at a virtual machine level.,verify the flow of traffic
+ip flow : capability enables you to specify a source and destination IPv4 address, port, protocol (TCP or UDP), and traffic direction (inbound or outbound) If the connection fails, IP flow verify tells you which security rule allowed or denied the communication.
+IP flow  verify : checks if a packet is allowed or denied to or from a virtual machine. The information consists of direction, protocol, local IP, remote IP, local port, and a remote port. If the packet is denied by a security group, the name of the rule that denied the packet is returned.
+
+
+
+NSG diagnostics allows you to detect traffic filtering issues at a virtual machine, virtual machine scale set, or application gateway level.
+Next hop helps you verify traffic routes and detect routing issues.
+
+Connection troubleshoot enables a one-time connectivity and latency check between a virtual machine and Bastion host, application gateway, or another virtual machine.
+
+Packet capture enables you to capture your virtual machine traffic.
+
+VPN troubleshoot runs multiple diagnostics checks on your VPN gateways and connections to help debug issues.
+
+Traffic
+NSG flow logs and VNet flow logs (preview) : allow you to log network traffic passing through your network security groups (NSGs) and virtual networks respectively.
+
+Traffic analytics: processes your NSG flow log data enabling you to visualize, query, analyze, and understand your network traffic.
+
+connection troubleshoot : from one vm to another at a particular time
+
+Network Performance Monitor: latency between your on-premises network and the virtual machines.
+
+network watcher : netwrok intrusions
