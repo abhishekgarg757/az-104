@@ -3,6 +3,8 @@ for app service : Back up and restore are supported in Basic, Standard, Premium,
 aap serviec and web app should be in same region 
 .net core in linux ND windows , asp.net in windows only
 CNAME record is required to map www.cloudportalweb.com to prodwebapp1.azurewebsites.net.
+You can turn on Web Server Logging. This will give a detail of all of the web server requests being made to the Azure Web App
+You can scale up the App Service Plan to get more CPU and Memory resources assigned to the respective web applications
 >﻿
 
 Cloud Device Administrator
@@ -13,15 +15,13 @@ application gateway for public, load balance for private
 
 nic should be in same region and subsrctiption as vnet and vm (differnet rg can work )
 
-azure recovery service vault should be in same region .blob data cannot be bacckup in RSV(it need a backup valut)
- BLOB and file service is supported with the import  job feature,Only the BLOB service is supported with the Export job feature
-For Azure Files, you can use Entra ID-based authentication (identity-based) and storage account keys.
 
 SAS tokens are typically used for blobs, queues, and tables, and stored access policies are specifically for controlling the start time, expiry time, and permissions for SAS tokens.
 
 for administrator , password reset policy is differnet : The two-gate policy requires two pieces of authentication data, such as an email address, authenticator app, or a phone number, and it prohibits security questions. Office and mobile voice calls are also prohibited for trial or free versions of Microsoft Entra ID.
 
-low priority vms , standard load balancer and scale setcannot be moved to other regions , 
+low priority vms , standard load balancer and scale set cannot be moved to other regions , 
+You cannot assign a Basic SKU IP address to a Standard Load Balancer
 
 Microsoft Entra authentication allows users to connect to Azure using their Microsoft Entra credentials. Native Microsoft Entra authentication is only supported for OpenVPN protocol and also requires the use of the Azure VPN Client. The supported client operation systems are Windows 10 or later and macOS.
 
@@ -41,9 +41,17 @@ Hosting background processing jobs
 Handling event-driven processing
 Running microservices
 
-Use az network private-endpoint-connection approve to approve a private endpoint connection.
+﻿
 
-View template from deployment history: Go to the resource group for your new resource group.
+The correct order of steps as follows:
+ Create an Azure container registry.
+Choose a pricing tier.
+Configure container registry settings.
+Set up authentication and security.
+Access and manage container images.
+
+
+Use az network private-endpoint-connection approve to approve a private endpoint connection.
 
 Azure AD Connect should be installed on a domain joined member server and not on a domain controller.
 
@@ -66,6 +74,7 @@ read : Microsoft.Authorization/*/read
 enable collection of guest OS diagnostics data = to collect data on the performance counters VM
 
 Cloud-init is a widely used approach to customize a Linux VM as it boots for the first time. You can use cloud-init to install packages and write files, or to configure users and security. As cloud-init runs during the initial boot process,
+You can then use the az vm create command for the deployment of the virtual machine
 
 
 scaleset for new vm capacity :
@@ -73,6 +82,15 @@ scaleset for new vm capacity :
  
 Site-to-Site VPN connection : local network gateway : address rangewill be on prem ip
 Site to Site VPN connections provide connectivity between an On-prem network and Azure Virtual Network using an encrypted tunnel over the public internet
+site -site :
+1) Create a gateway subnet
+
+2) Create a local network gateway
+
+3) Create a virtual network gateway
+
+4) Create the VPN connection
+
 point-site : If you make a change to the azure vnet, VPN client packages must be reinstalled again on on prem
  
 On-premise Active Directory, the user needs to have Enterprise Admin privileges.
@@ -92,6 +110,8 @@ VM you wish to resize is part of an availability set, then you must stop all VMs
 User administrator – can create and manage users and groups, and can reset passwords for users, Helpdesk administrators and User administrators.
 User Access Administrator – No access to the resource except the ability to change the access control.
 Adding a group to an administrative unit brings the group itself into the management scope of the administrative unit, but not the members of the group
+You can have Administrative Units and assign the administrators privilege over each unit. You can have one unit for each office.
+You just need to specify the user principal name for each user in the list when submitted for the Bulk delete operation.
 
 We can enable encryption on a running IaaS virtual machine in Azure.
 
@@ -106,6 +126,8 @@ Verify the custom domain.
 
 new-AzDNSrecordSet
 Azure DNS private zone allows private name resolution between Azure Virtual Networks.
+
+You have to modify the Name server records in the external domain registrar to reflect the Name server records provided in the Azure DNS zone
 
 before you can delete a recovery services vault,  you need to stop the backup and delete the backup data. , 
 you cant delete a recovery services vault, having registered storage accounts.,protected data sources (f, IaaS VMs, SQL databases, or Azure file shares).
@@ -129,8 +151,7 @@ default frequency of collecting platform metrics : 1 minute
 
 Azure Monitor Log Analytics allows you to query and analyze detailed records from various sources, making it suitable for analyzing system updates across VMs.
 
-In complete mode, the Resource Manager deletes resources in the resource group that aren't specified in the template.
-
+1 azure bastion is enough fro all virtual networks connected
 
 The Azure Backup vault was an older construct and has been superseded by the Recovery Services vault.
 
@@ -152,6 +173,13 @@ arm to bicep : bicep decomplie "template.json"
 bicep to arm : bicep build"template.bicep"
 vmsize : 'Standard_DS1_v2 '
 
+﻿
+View template from deployment history: Go to the resource group for your new resource group.
+
+In complete mode, the Resource Manager deletes resources in the resource group that aren't specified in the template.
+
+to export deployment template using powershell : Save-AzResourceGroupDeploymentTemplate 
+
 When mapping a custom domain to an Azure Web App, you typically use a CNAME record to point to the default domain provided by Azure for the app
 
 Once you add a cloud endpoint to a Sync group, you can’t add any other shares as the cloud endpoint.
@@ -159,11 +187,24 @@ Once you add a server as a server endpoint with a particular file path, you can�
 
 you can’t enable Multi-Factor authentication for external users. There is no dependency as such on the phone numbers. : can be added in latest
 Microsoft Entra B2B collaboration allows organizations to work with external users by inviting them to their Microsoft Entra tenant
+access control -grant : ensure the setting of MFA
+condition section: location,platofrm,apps
+
 
 the replication type of the storage account can be changed to Zone redundant storage only if the current replication technique is either LRS or GRS.
+azure recovery service vault should be in same region .blob data cannot be bacckup in RSV(it need a backup valut)
+ BLOB and file service is supported with the import  job feature,Only the BLOB service is supported with the Export job feature
+For Azure Files, you can use Entra ID-based authentication (identity-based) and storage account keys.
+high performacnce scale applications : premium file share
+lifecyclemanagement not supported for FileStorage accounts
+ra-grs does not support files
+grs gives :99.99% over a year
+
+to connect to azure firewall :  Public IP address needs be of the Standard SKU, and it needs be a Static IP address. It can be of the Regional or Global Tier.
 
 kubenet : metro : pods have differnet ips that the vnet ,
 azure cni : highways : pods have same ips from the vnet ,
+If the cluster is using kubenet as the underlying network layer, then you can use Calico Network Policies to restrict traffic between pods.
 set-azakscluster
 
 look back window over which metric values are checked, while configuring a static threshold metric alert rule ? : period
