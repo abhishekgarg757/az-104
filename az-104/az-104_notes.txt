@@ -5,7 +5,9 @@ aap serviec and web app should be in same region
 CNAME record is required to map www.cloudportalweb.com to prodwebapp1.azurewebsites.net.
 When mapping a custom domain to an Azure Web App, you typically use a CNAME record to point to the default domain provided by Azure for the app
 You can turn on Web Server Logging. This will give a detail of all of the web server requests being made to the Azure Web App
-You can scale up the App Service Plan to get more CPU and Memory resources assigned to the respective web applications
+You scale up by changing the pricing tier of the App Service plan that your app belongs to.
+ Scale out: Increase the number of VM instances that run your app.
+
 >﻿
 Add a custom domain to your Azure
 Create a CNAME DNS record.
@@ -29,6 +31,8 @@ Cloud Device Administrator
 PRIVILEGED
 This is a privileged role. Users in this role can enable, disable, and delete devices in Microsoft Entra ID and read Windows 10 BitLocker keys. The role does not grant permissions to manage any other properties on the device. this role allow  to add   regisrterd/joined devices to any group 
 
+user adiminstration cannot add regisrterd/joined devices to any group 
+
 application gateway for public, load balance for private
 
 nic should be in same region and subsrctiption as vnet and vm (differnet rg can work )
@@ -41,6 +45,7 @@ for administrator , password reset policy is differnet : The two-gate policy req
 low priority vms , standard load balancer and scale set cannot be moved to other regions , 
 You cannot assign a Basic SKU IP address to a Standard Load Balancer
 to connect to azure firewall :  Public IP address needs be of the Standard SKU, and it needs be a Static IP address. It can be of the Regional or Global Tier.
+To provide the ability to add the backend pool,health probe the user must have the ability to read the details of the virtual machine ,ips and the virtual network. For this reason, the user needs to be given access as the resource group level.
 
 Microsoft Entra authentication allows users to connect to Azure using their Microsoft Entra credentials. Native Microsoft Entra authentication is only supported for OpenVPN protocol and also requires the use of the Azure VPN Client. The supported client operation systems are Windows 10 or later and macOS.
 
@@ -69,6 +74,8 @@ Add "https://autologon.microsoftazuread-sso.com" to the Intranet zone settings b
 You can set an expiration policy only for Office 365 groups in Azure Active Directory
 
 You can  detach the data disks and attach them to another VM without stopping either of the VMs.
+new-azdiskconfig
+new-azdisk
 
 
  SLA of 99.5% uptime,  combination of Azure Managed Disks and Azure availability sets
@@ -187,11 +194,13 @@ you can’t enable Multi-Factor authentication for external users. There is no d
 Microsoft Entra B2B collaboration allows organizations to work with external users by inviting them to their Microsoft Entra tenant
 access control -grant : ensure the setting of MFA
 condition section: location,platofrm,apps
+configure fraud alerts for spam mfa
 
 
 the replication type of the storage account can be changed to Zone redundant storage only if the current replication technique is either LRS or GRS.
 azure recovery service vault should be in same region .blob data cannot be bacckup in RSV(it need a backup valut)
 BLOB and file service is supported with the import  job feature,Only the BLOB service is supported with the Export job feature
+When transferring data to an Azure storage account, you can transfer data to Azure blob storage or Azure file storage.
 For Azure Files, you can use Entra ID-based authentication (identity-based) and storage account keys.
 high performacnce scale applications : premium file share
 lifecyclemanagement not supported for FileStorage accounts
@@ -253,6 +262,9 @@ connection troubleshoot : from one vm to another at a particular time
 
 Network Performance Monitor: latency between your on-premises network and the virtual machines.
 
+To record the successful and failed connection requests, we should use Azure Network Watcher flow logs. First, we can enable Network Watcher in the region of our choice and then use the Azure Network Watcher flow logs.The flow logs are then written to a storage account
+
+variable packet capture : netwrok intrusions
 network watcher : netwrok intrusions
 Create a virtual network
 Create a virtual machine with a network security group associated to its network interface
