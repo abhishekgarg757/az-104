@@ -27,14 +27,6 @@ Microsoft Entra authentication allows users to connect to Azure using their Micr
 
 
 
-network watcher : netwrok intrusions
-Create a virtual network
-Create a virtual machine with a network security group associated to its network interface
-Register Microsoft.insights provider
-Enable flow logging for a network security group using Network Watcher flow logs
-Download logged data
-View logged data
-
 Azure container app for :
 Deploying API endpoints
 Hosting background processing jobs
@@ -131,7 +123,8 @@ You have to modify the Name server records in the external domain registrar to r
 
 before you can delete a recovery services vault,  you need to stop the backup and delete the backup data. , 
 you cant delete a recovery services vault, having registered storage accounts.,protected data sources (f, IaaS VMs, SQL databases, or Azure file shares).
-we can have one policy for the Azure virtual machines and one for Azure file shares. The Azure SQL Databases have a separate backup mechanism via automated backups
+we can have one backup policy for the Azure virtual machines and one for Azure file shares. The Azure SQL Databases have a separate backup mechanism via automated backups
+
 policy exection sequuence : disable,modify,deny,audit
 Azure Policy definitions have modes like 'Indexed' and 'All'. There isn't a mode called 'DoNotAllow'.
 New-AzNetworkSecurityRuleConfig 
@@ -264,3 +257,13 @@ connection troubleshoot : from one vm to another at a particular time
 Network Performance Monitor: latency between your on-premises network and the virtual machines.
 
 network watcher : netwrok intrusions
+
+
+
+network watcher : netwrok intrusions
+Create a virtual network
+Create a virtual machine with a network security group associated to its network interface
+Register Microsoft.insights provider
+Enable flow logging for a network security group using Network Watcher flow logs
+Download logged data
+View logged data
