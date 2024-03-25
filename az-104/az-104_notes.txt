@@ -3,9 +3,27 @@ for app service : Back up and restore are supported in Basic, Standard, Premium,
 aap serviec and web app should be in same region 
 .net core in linux ND windows , asp.net in windows only
 CNAME record is required to map www.cloudportalweb.com to prodwebapp1.azurewebsites.net.
+When mapping a custom domain to an Azure Web App, you typically use a CNAME record to point to the default domain provided by Azure for the app
 You can turn on Web Server Logging. This will give a detail of all of the web server requests being made to the Azure Web App
 You can scale up the App Service Plan to get more CPU and Memory resources assigned to the respective web applications
 >﻿
+Add a custom domain to your Azure
+Create a CNAME DNS record.
+Associate the custom domain with your CDN endpoint.
+Verify the custom domain.
+
+new-AzDNSrecordSet
+Azure DNS private zone allows private name resolution between Azure Virtual Networks.
+
+You have to modify the Name server records in the external domain registrar to reflect the Name server records provided in the Azure DNS zone
+
+a. An "A" record maps a domain name to the IP address (IPv4) of the computer hosting the domain. It uses the domain name to find the IP address of a computer connected to the internet. In this case, we want mail.example.com to point directly to an IP address of your mail server.
+
+b. A CNAME (Canonical Name) record is a type of DNS record that maps an alias name to a true or canonical domain name. CNAME records are typically used to map a subdomain such as www or mail to the domain hosting that subdomain’s content.
+
+c. The MX (Mail Exchange) record is crucial for directing email to your domain, but it doesn't directly map to an IP address like the A or AAAA records. Instead, it points to a domain name (usually a subdomain like "mail.example.com").
+
+d. In Azure DNS, you can create a TXT record for various purposes. For example, you might need to create a TXT record to verify that you own the domain you want to add to Microsoft 365. Or, you might need to create a TXT record to validate a custom domain for your app service.
 
 Cloud Device Administrator
 PRIVILEGED
@@ -22,9 +40,9 @@ for administrator , password reset policy is differnet : The two-gate policy req
 
 low priority vms , standard load balancer and scale set cannot be moved to other regions , 
 You cannot assign a Basic SKU IP address to a Standard Load Balancer
+to connect to azure firewall :  Public IP address needs be of the Standard SKU, and it needs be a Static IP address. It can be of the Regional or Global Tier.
 
 Microsoft Entra authentication allows users to connect to Azure using their Microsoft Entra credentials. Native Microsoft Entra authentication is only supported for OpenVPN protocol and also requires the use of the Azure VPN Client. The supported client operation systems are Windows 10 or later and macOS.
-
 
 
 Azure container app for :
@@ -33,10 +51,9 @@ Hosting background processing jobs
 Handling event-driven processing
 Running microservices
 
-﻿
 
 The correct order of steps as follows:
- Create an Azure container registry.
+Create an Azure container registry.
 Choose a pricing tier.
 Configure container registry settings.
 Set up authentication and security.
@@ -70,9 +87,9 @@ You can then use the az vm create command for the deployment of the virtual mach
 
 
 scaleset for new vm capacity :
- az vmss scale --resource-group "skillcertpro-rg" --name skillcertproet --new-capacity 4
+az vmss scale --resource-group "skillcertpro-rg" --name skillcertproet --new-capacity 4
  
-Site-to-Site VPN connection : local network gateway : address rangewill be on prem ip
+Site-to-Site VPN connection : local network gateway : address range will be on prem ip
 Site to Site VPN connections provide connectivity between an On-prem network and Azure Virtual Network using an encrypted tunnel over the public internet
 site -site :
 1) Create a gateway subnet
@@ -111,15 +128,6 @@ A service tag represents a group of IP address prefixes from a given Azure servi
 
 Each resource or resource group can indeed have a maximum of 50 tag name/value pairs.
 
-Add a custom domain to your Azure
-Create a CNAME DNS record.
-Associate the custom domain with your CDN endpoint.
-Verify the custom domain.
-
-new-AzDNSrecordSet
-Azure DNS private zone allows private name resolution between Azure Virtual Networks.
-
-You have to modify the Name server records in the external domain registrar to reflect the Name server records provided in the Azure DNS zone
 
 before you can delete a recovery services vault,  you need to stop the backup and delete the backup data. , 
 you cant delete a recovery services vault, having registered storage accounts.,protected data sources (f, IaaS VMs, SQL databases, or Azure file shares).
@@ -151,8 +159,6 @@ The Azure Backup vault was an older construct and has been superseded by the Rec
 In Entra ID, licenses can be assigned both to individual users and to groups. Licenses are not automatically provisioned for every user upon creation. Users can also have multiple licenses.
 License cannot be assigned to a user without a usage location specified.
 
-Azure Files provides the capability to take snapshots of SMB file shares. Share snapshots capture the share state at that point in time.
-
 bicep:
 1.Azure CLI can be used to directly convert ARM template JSON files to Bicep files.
 
@@ -166,14 +172,12 @@ arm to bicep : bicep decomplie "template.json"
 bicep to arm : bicep build"template.bicep"
 vmsize : 'Standard_DS1_v2 '
 
-﻿
 View template from deployment history: Go to the resource group for your new resource group.
 
 In complete mode, the Resource Manager deletes resources in the resource group that aren't specified in the template.
 
 to export deployment template using powershell : Save-AzResourceGroupDeploymentTemplate 
 
-When mapping a custom domain to an Azure Web App, you typically use a CNAME record to point to the default domain provided by Azure for the app
 
 Once you add a cloud endpoint to a Sync group, you can’t add any other shares as the cloud endpoint.
 Once you add a server as a server endpoint with a particular file path, you can’t add the server as another endpoint with another path.
@@ -186,19 +190,21 @@ condition section: location,platofrm,apps
 
 the replication type of the storage account can be changed to Zone redundant storage only if the current replication technique is either LRS or GRS.
 azure recovery service vault should be in same region .blob data cannot be bacckup in RSV(it need a backup valut)
- BLOB and file service is supported with the import  job feature,Only the BLOB service is supported with the Export job feature
+BLOB and file service is supported with the import  job feature,Only the BLOB service is supported with the Export job feature
 For Azure Files, you can use Entra ID-based authentication (identity-based) and storage account keys.
 high performacnce scale applications : premium file share
 lifecyclemanagement not supported for FileStorage accounts
+Azure Files provides the capability to take snapshots of SMB file shares. Share snapshots capture the share state at that point in time.
 ra-grs does not support files
 grs gives :99.99% over a year
 
-to connect to azure firewall :  Public IP address needs be of the Standard SKU, and it needs be a Static IP address. It can be of the Regional or Global Tier.
 
 kubenet : metro : pods have differnet ips that the vnet ,
 azure cni : highways : pods have same ips from the vnet ,
 If the cluster is using kubenet as the underlying network layer, then you can use Calico Network Policies to restrict traffic between pods.
 set-azakscluster
+az-aks command to autoscale
+
 
 look back window over which metric values are checked, while configuring a static threshold metric alert rule ? : period
  
@@ -206,7 +212,6 @@ If read only lock on resources only :Resources can be moved to another another r
 If read only lock on resources group only :Resources cannot  be moved to another another resource group
 You cannot move existing resources to the resource group having policy enabled. The policy is applied  also when creating or updating a resource.
 You can move the resourse from the rg having the policy applied 
-az-aks command to autoscale
 
 1 region : multiple datacentre
 avaiblity set in one datacentre only
@@ -219,14 +224,6 @@ Update domains are used to group virtual machines and physical hardware that can
 
 Service endpoints allow you to restrict access to Azure PaaS services to specific VNets, making them suitable for securing Azure SQL Database access from a VNet.
 
-a. An "A" record maps a domain name to the IP address (IPv4) of the computer hosting the domain. It uses the domain name to find the IP address of a computer connected to the internet. In this case, we want mail.example.com to point directly to an IP address of your mail server.
-
-b. A CNAME (Canonical Name) record is a type of DNS record that maps an alias name to a true or canonical domain name. CNAME records are typically used to map a subdomain such as www or mail to the domain hosting that subdomain’s content.
-
-c. The MX (Mail Exchange) record is crucial for directing email to your domain, but it doesn't directly map to an IP address like the A or AAAA records. Instead, it points to a domain name (usually a subdomain like "mail.example.com").
-
-d. In Azure DNS, you can create a TXT record for various purposes. For example, you might need to create a TXT record to verify that you own the domain you want to add to Microsoft 365. Or, you might need to create a TXT record to validate a custom domain for your app service.
-
 Monitoring
 Topology view : shows you the resources in your virtual network and the relationships between them.
 Connection monitor  : allows you to monitor connectivity and latency between endpoints inside and outside Azure.,continous , average route time
@@ -235,7 +232,6 @@ Network diagnostic tools:
 IP flow verify :allows you to detect traffic filtering issues at a virtual machine level.,verify the flow of traffic
 ip flow : capability enables you to specify a source and destination IPv4 address, port, protocol (TCP or UDP), and traffic direction (inbound or outbound) If the connection fails, IP flow verify tells you which security rule allowed or denied the communication.
 IP flow  verify : checks if a packet is allowed or denied to or from a virtual machine. The information consists of direction, protocol, local IP, remote IP, local port, and a remote port. If the packet is denied by a security group, the name of the rule that denied the packet is returned.
-
 
 
 NSG diagnostics allows you to detect traffic filtering issues at a virtual machine, virtual machine scale set, or application gateway level.
@@ -255,10 +251,6 @@ Traffic analytics: processes your NSG flow log data enabling you to visualize, q
 connection troubleshoot : from one vm to another at a particular time
 
 Network Performance Monitor: latency between your on-premises network and the virtual machines.
-
-network watcher : netwrok intrusions
-
-
 
 network watcher : netwrok intrusions
 Create a virtual network
