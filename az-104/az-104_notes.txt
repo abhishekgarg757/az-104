@@ -110,6 +110,7 @@ file recovery steps from azure to on prem:
 3.And finally, if your workstation is Windows, you can use File explorer to browse through the files
 
 
+192.169.3.1/24 : u cannot change first 24 bits in this submet
 nsg : first subnet , then NIC
 ASGs is typically associated with NSGs.
 
