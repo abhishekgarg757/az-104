@@ -1,7 +1,7 @@
 you cannot move app service to destination subscription  if destination have already any app service plan or web app
 for app service : Back up and restore are supported in Basic, Standard, Premium, and Isolated tiers. For Basic tier, only the production slot can be backed up and restored.
 aap serviec and web app should be in same region 
-.net core in linux ND windows , asp.net in windows only
+.net core in linux and windows , asp.net in windows only , Ruby 2.6 is only  Linux only
 CNAME record is required to map www.cloudportalweb.com to prodwebapp1.azurewebsites.net.
 When mapping a custom domain to an Azure Web App, you typically use a CNAME record to point to the default domain provided by Azure for the app
 You can turn on Web Server Logging. This will give a detail of all of the web server requests being made to the Azure Web App
@@ -32,6 +32,8 @@ PRIVILEGED
 This is a privileged role. Users in this role can enable, disable, and delete devices in Microsoft Entra ID and read Windows 10 BitLocker keys. The role does not grant permissions to manage any other properties on the device. this role allow  to add   regisrterd/joined devices to any group 
 
 user adiminstration cannot add regisrterd/joined devices to any group 
+
+when creating new RBAC custom roles, you can clone existing in-built and custom roles.
 
 application gateway for public, load balance for private
 
@@ -122,6 +124,7 @@ nsg : first subnet , then NIC
 ASGs is typically associated with NSGs.
 
 A VM can only be added to an availability set when it is created
+ the virtual machine contributor role will give permissions to the user to add the disks to the machine.
 VM you wish to resize is part of an availability set, then you must stop all VMs in the availability set
 
 User administrator – can create and manage users and groups, and can reset passwords for users, Helpdesk administrators and User administrators.
@@ -141,6 +144,11 @@ before you can delete a recovery services vault,  you need to stop the backup an
 you cant delete a recovery services vault, having registered storage accounts.,protected data sources (f, IaaS VMs, SQL databases, or Azure file shares).
 we can have one backup policy for the Azure virtual machines and one for Azure file shares. The Azure SQL Databases have a separate backup mechanism via automated backups
 
+Azure Policy, you can assign it at the Tenant Root Group level.
+You need to start adding exclusions from the Management Group onwards
+The maximum level you can go till when it comes to assigning the Azure Policy is the Resource Group level.: means cannot assign it to virtual machine/resource level
+you can add exclusions at the resource level
+
 policy exection sequuence : disable,modify,deny,audit
 Azure Policy definitions have modes like 'Indexed' and 'All'. There isn't a mode called 'DoNotAllow'.
 New-AzNetworkSecurityRuleConfig 
@@ -153,10 +161,14 @@ new-azroledefination
 Gatewaytransit is a peering property that lets one virtual network use the VPN gateway in the peered virtual network for cross-premises or VNet-to-VNet connectivity
 
 Uniform Mode: In uniform mode, all VM instances in the VMSS are identical, using the same image and configuration. Since our requirement is to add custom virtual machines to VMSS, we need to choose orchestration mode as Flexi,
+The FQDN will be returned as appvm.internal.cloudapp.net
 
 Azure Monitor Agent (AMA) replaces the Log Analytics agent (also known as MMA and OMS)
 
 default frequency of collecting platform metrics : 1 minute
+
+data collect rule: 
+sorce VM only , destination : log analytic workspace only
 
 Azure Monitor Log Analytics allows you to query and analyze detailed records from various sources, making it suitable for analyzing system updates across VMs.
 
@@ -196,7 +208,7 @@ access control -grant : ensure the setting of MFA
 condition section: location,platofrm,apps
 configure fraud alerts for spam mfa
 
-
+You can use the Azure Site Recovery tool to move the servers to Azure.
 the replication type of the storage account can be changed to Zone redundant storage only if the current replication technique is either LRS or GRS.
 azure recovery service vault should be in same region .blob data cannot be bacckup in RSV(it need a backup valut)
 BLOB and file service is supported with the import  job feature,Only the BLOB service is supported with the Export job feature
@@ -204,6 +216,10 @@ When transferring data to an Azure storage account, you can transfer data to Azu
 For Azure Files, you can use Entra ID-based authentication (identity-based) and storage account keys.
 high performacnce scale applications : premium file share
 lifecyclemanagement not supported for FileStorage accounts
+Live migration is not supported for General Purpose V1 storage accounts and BLOB premium
+You can persist data for Azure Container Instances with the use of Azure Files.
+For Azure File storage, you can only use Shared Access Signatures when it comes to authorization.
+For Azure Blob storage, you can only use Azure AD and Shared Access Signatures when it comes to authorization.
 Azure Files provides the capability to take snapshots of SMB file shares. Share snapshots capture the share state at that point in time.
 ra-grs does not support files
 grs gives :99.99% over a year
@@ -214,6 +230,7 @@ azure cni : highways : pods have same ips from the vnet ,
 If the cluster is using kubenet as the underlying network layer, then you can use Calico Network Policies to restrict traffic between pods.
 set-azakscluster
 az-aks command to autoscale
+First push the application image to the container registry. Then you can deploy the container on the cluster based on the image stored in the container registry.
 
 
 look back window over which metric values are checked, while configuring a static threshold metric alert rule ? : period
@@ -222,6 +239,7 @@ If read only lock on resources only :Resources can be moved to another another r
 If read only lock on resources group only :Resources cannot  be moved to another another resource group
 You cannot move existing resources to the resource group having policy enabled. The policy is applied  also when creating or updating a resource.
 You can move the resourse from the rg having the policy applied 
+subnet can be created ,if policy is applied on virtual netwrok
 
 1 region : multiple datacentre
 avaiblity set in one datacentre only
