@@ -8,6 +8,8 @@ You can turn on Web Server Logging. This will give a detail of all of the web se
 You scale up by changing the pricing tier of the App Service plan that your app belongs to.
  Scale out: Increase the number of VM instances that run your app.
 
+If you create a DNS zone in Azure, then you need to first make a note of the Name servers for the DNS zone. Then go to your DNS provider and enter the Name servers for your Domain.
+azure dns zone : Manage and host your registered domain and associated records.
 >﻿
 Add a custom domain to your Azure
 Create a CNAME DNS record.
@@ -135,9 +137,17 @@ You just need to specify the user principal name for each user in the list when 
 
 We can enable encryption on a running IaaS virtual machine in Azure.
 
+AZure Disk encryption:
+ADE is integrated with Azure Key Vault.
+ADE encrypted VM can be backed up to the Recovery Service Vault.
+ADE uses DM-Crypt for Linux-based VMs.
+ADE uses BitLocker for Windows VM-controlled disks.
+
 A service tag represents a group of IP address prefixes from a given Azure service.
 
 Each resource or resource group can indeed have a maximum of 50 tag name/value pairs.
+
+organise resourses for cost reporting : Subscriptions, resource groups, and tags
 
 
 before you can delete a recovery services vault,  you need to stop the backup and delete the backup data. , 
@@ -217,6 +227,7 @@ For Azure Files, you can use Entra ID-based authentication (identity-based) and 
 high performacnce scale applications : premium file share
 lifecyclemanagement not supported for FileStorage accounts
 Live migration is not supported for General Purpose V1 storage accounts and BLOB premium
+Live migration is not supported in  case : NFSv3 protocol support is enabled for Azure Blob Storage : only manual migration is allowed
 You can persist data for Azure Container Instances with the use of Azure Files.
 For Azure File storage, you can only use Shared Access Signatures when it comes to authorization.
 For Azure Blob storage, you can only use Azure AD and Shared Access Signatures when it comes to authorization.
@@ -249,6 +260,8 @@ multiple avialbility zone : accross different datacentres, in one region
 Fault domains are used to define the group of virtual machines that share a common source and network switch. You can have up to 3 fault domains.
 Update domains are used to group virtual machines and physical hardware that can be rebooted at the same time. You can have up to 20 update domains.
 27 vms on 5 updaet domains: 27/5 = 5 it means 2 updaet domains have 6 and 3 update domins have 5 vms each
+
+to get diagonistics from VM , first step : You need to create a storage account to store it
 
 Service endpoints allow you to restrict access to Azure PaaS services to specific VNets, making them suitable for securing Azure SQL Database access from a VNet.
 
