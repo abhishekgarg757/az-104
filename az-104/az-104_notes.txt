@@ -412,3 +412,13 @@ Next Hop is the VM1. So, it is Virtual Appliance
 Assignment – This route is to be followed by Gateway Subnet for the incoming traffic
 
 Live metrics stream in application insights includes such information as the number of incoming requests, the duration of those requests, and any failures that occur. You can also inspect critical performance metrics such as processor and memory.
+
+
+You have an Azure virtual network named VNet1 that connects to your on-premises network by using a site-to-site VPN. VNet1 contains one subnet named Sunet1.
+Subnet1 is associated to a network security group (NSG) named NSG1. Subnet1 contains a basic internal load balancer named ILB1. ILB1 has three Azure virtual machines in the backend pool.
+You need to collect data about the IP addresses that connects to ILB1. You must be able to run interactive queries from the Azure portal against the collected data.
+What should you do? (SELECT TWO)
+
+
+ Resource to create - An Azure Storage account
+ Resource on which to enable diagnostics - NSG1
