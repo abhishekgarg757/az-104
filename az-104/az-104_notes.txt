@@ -39,6 +39,14 @@ This is a privileged role. Users in this role can enable, disable, and delete de
 
 user adiminstration cannot add regisrterd/joined devices to any group 
 
+To add or delete users from your Azure Active Directory (Azure AD) organization, you must be a User administrator or Global Administrator.
+But only the user who creates a new tenant is added to it, and assigned the Global Administrator role.
+User Administrators or Global Administrators in other tenants linked to the subscription do no inherit any administrative privileges on the new tenant.
+
+only owner can give owner role
+
+ User Administrator role assigned cannot add security questions, but only users with Global Administrator role can access and setup Azure Active Directory Self Service Password Reset, so the statement is False.
+
 when creating new RBAC custom roles, you can clone existing in-built and custom roles.
 
 application gateway for public, load balance for private
@@ -110,6 +118,8 @@ an Office 365 group that uses the Assigned membership type
 an Office 365 group that uses the Dynamic User membership type
 
 read : Microsoft.Authorization/*/read
+Microsoft.Authorization/
+There is no option for /ResourceGroup, so for the scope the subscription and subscription ID must be selected. 
 
 enable collection of guest OS diagnostics data = to collect data on the performance counters VM
 
@@ -135,6 +145,11 @@ site -site :
 3) Create a virtual network gateway
 
 4) Create the VPN connection
+
+vnet to on prem site to site :
+ Create a connection
+ Create a local site VPN gateway
+ Create a VPN gateway that uses the VpnGw1 SKU
 
 point-site : If you make a change to the azure vnet, VPN client packages must be reinstalled again on on prem
 point -s ite : We need to setup a RouteBased VPN. An Azure Vnet gateway type cannot be changed from policy-based to route-based or the other way. The gateway must be deleted and recreated, a process taking around 60 minutes.
@@ -203,6 +218,7 @@ new-azroledefination
 
 Gatewaytransit is a peering property that lets one virtual network use the VPN gateway in the peered virtual network for cross-premises or VNet-to-VNet connectivity
 You can’t add address ranges to, or delete address ranges from a virtual network’s address space once a virtual network is peered with another virtual network.
+VNet-to-VNet connectivity : can be used generally in cross regions
 
 Uniform Mode: In uniform mode, all VM instances in the VMSS are identical, using the same image and configuration. Since our requirement is to add custom virtual machines to VMSS, we need to choose orchestration mode as Flexi,
 The FQDN will be returned as appvm.internal.cloudapp.net
@@ -283,7 +299,7 @@ From the Azure portal, update the import job
 For Azure Files, you can use Entra ID-based authentication (identity-based) and storage account keys.
 access keys + sas : files
 entra ID + SAS : blobs
-sas : file storage
+sas : premium file storage
 
 to minimizes the number of secrets need to be configured in the application.
 Once you create a managed identity, you need to provide access through IAM. not sas (sas only in case of time )
@@ -377,6 +393,12 @@ From Workbooks, create a workbook.
 
 A Log Analytics workspace is a data repository for Azure Monitor log data. A pre-requisite in order to use Network Performance Monitor.
 
+This question is a bit tricky. The Microsoft Monitoring Agent is actually installed and NOT added to a VM.
+So the full solution path would be:
+You create an Azure Log Analytics workspace and configure the data settings. You install the Microsoft Monitoring Agent on VM1. You create an alert in Azure Monitor and specify the Log Analytics workspace as the source.
+
+In order for a user to be allowed to enable Traffic Analytics for an Azure subscription, the user must have one of the following roles assigned at the subscription level: owner, contributor, reader, or network contributor.
+
 You need to record all the successful and failed connection attempts to VM1."
  Enable Azure Network Watcher flow logs.
  Enable Azure Network Watcher in the East US Azure region.
@@ -388,3 +410,5 @@ route table :
 Address prefix – Classless Inter-Domain Routing (CIDR) notation that you want to route traffic to. In this case, Vnet 1
 Next Hop is the VM1. So, it is Virtual Appliance
 Assignment – This route is to be followed by Gateway Subnet for the incoming traffic
+
+Live metrics stream in application insights includes such information as the number of incoming requests, the duration of those requests, and any failures that occur. You can also inspect critical performance metrics such as processor and memory.
