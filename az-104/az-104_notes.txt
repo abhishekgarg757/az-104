@@ -400,3 +400,25 @@ You need to collect data about the IP addresses that connects to ILB1. You must 
 What should you do? (SELECT TWO)
 Resource to create - An Azure Storage account
 Resource on which to enable diagnostics - NSG1
+
+az-104
+theory and labs : 
+
+Alan Rodrigues udemy(25 hours) : must do , two times if get time 
+susanth sutheesh az-104 you tube : optional
+revision : john savilaz-104 you tube : must do one before cert
+plural sight az-104 (36 hours) : optional
+microsoft documentation: optional
+
+labs are optional
+ : https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/  
+ : https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator/tree/master/Instructions/Labs (15 days, spending 2 hours each)
+	 
+Tests: 
+Skillcertpro must do all tests , perfrom two frsh tests on the day of certification also 
+: 757
+
+whizlab tests : must  :
+https://www.whizlabs.com/learn/course/microsoft-azure-certification-az-104/298/pt
+dumpsgate :  not any review yet
+test from esi  microsoft  : never do , do only if have extra time 
