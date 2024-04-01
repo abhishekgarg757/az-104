@@ -6,7 +6,7 @@ CNAME record is required to map www.cloudportalweb.com to prodwebapp1.azurewebsi
 When mapping a custom domain to an Azure Web App, you typically use a CNAME record to point to the default domain provided by Azure for the app
 You can turn on Web Server Logging. This will give a detail of all of the web server requests being made to the Azure Web App
 You scale up by changing the pricing tier of the App Service plan that your app belongs to.
- Scale out: Increase the number of VM instances that run your app.
+Scale out: Increase the number of VM instances that run your app.
  
 The I1 SKU allows your app to run on dedicated hardware, and also provides network isolation on top of compute isolation to protect your app. It also provides the maximum scale-out capabilities.
 
@@ -23,7 +23,6 @@ Verify the custom domain.
 new-AzDNSrecordSet
 Azure DNS private zone allows private name resolution between Azure Virtual Networks.
 
-You have to modify the Name server records in the external domain registrar to reflect the Name server records provided in the Azure DNS zone
 
 a. An "A" record maps a domain name to the IP address (IPv4) of the computer hosting the domain. It uses the domain name to find the IP address of a computer connected to the internet. In this case, we want mail.example.com to point directly to an IP address of your mail server.
 
@@ -33,11 +32,14 @@ c. The MX (Mail Exchange) record is crucial for directing email to your domain, 
 
 d. In Azure DNS, you can create a TXT record for various purposes. For example, you might need to create a TXT record to verify that you own the domain you want to add to Microsoft 365. Or, you might need to create a TXT record to validate a custom domain for your app service.
 
-Cloud Device Administrator
-PRIVILEGED
+Microsoft Entra authentication allows users to connect to Azure using their Microsoft Entra credentials. Native Microsoft Entra authentication is only supported for OpenVPN protocol and also requires the use of the Azure VPN Client. The supported client operation systems are Windows 10 or later and macOS.
+
+Cloud Device Administrator : privileged
 This is a privileged role. Users in this role can enable, disable, and delete devices in Microsoft Entra ID and read Windows 10 BitLocker keys. The role does not grant permissions to manage any other properties on the device. this role allow  to add   regisrterd/joined devices to any group 
 
-user adiminstration cannot add regisrterd/joined devices to any group 
+user adiminstration cannot add regisrterd/joined devices to any group
+ 
+User Administrator role assigned cannot add security questions, but only users with Global Administrator role can access and setup Azure Active Directory Self Service Password Reset,
 
 To add or delete users from your Azure Active Directory (Azure AD) organization, you must be a User administrator or Global Administrator.
 But only the user who creates a new tenant is added to it, and assigned the Global Administrator role.
@@ -45,20 +47,61 @@ User Administrators or Global Administrators in other tenants linked to the subs
 
 only owner can give owner role
 
- User Administrator role assigned cannot add security questions, but only users with Global Administrator role can access and setup Azure Active Directory Self Service Password Reset, so the statement is False.
-
 when creating new RBAC custom roles, you can clone existing in-built and custom roles.
 
+for administrator , password reset policy is differnet : The two-gate policy requires two pieces of authentication data, such as an email address, authenticator app, or a phone number, and it prohibits security questions. Office and mobile voice calls are also prohibited for trial or free versions of Microsoft Entra ID.
+
+you can’t enable Multi-Factor authentication for external users. There is no dependency as such on the phone numbers. : can be added in latest
+Microsoft Entra B2B collaboration allows organizations to work with external users by inviting them to their Microsoft Entra tenant
+access control -grant : ensure the setting of MFA
+condition section: location,platofrm,apps
+configure fraud alerts for spam mfa
+sms and autheticator app : both mfa and sspr
+how to configure sspr : 
+· Configure the required permissions for password writeback
+· Enable the password writeback in Azure AD Connect
+· Enable password writeback in Azure AD SSPR
+
+You need to create a conditional access policy that requires all users to use multi-factor authentication when they access the Azure portal.:3 sections to update :
+ Users and Groups
+ Cloud Apps
+ Grant
+
+User2 is from Windows server active directory, you must use Windows Server Active Directory to update the identity,contact info, or job
+You can update usage location for kind of users. 
+
+Azure AD Connect should be installed on a domain joined member server and not on a domain controller.
+
+Add "https://autologon.microsoftazuread-sso.com" to the Intranet zone settings by using Group Policy in Active Directory
+
+You can set an expiration policy only for Office 365 groups in Azure Active Directory
+ 
+Global Administrator is automatically assigned to whoever creates the tenant first
+only Global Administrator accounts can install and configure health agents
+ 
+You plan to grant three users named User1, User2, and User3 access to a temporary Microsoft SharePoint document library named Library1.
+You need to create groups for the users. The solution must ensure that the groups are deleted automatically after 180 days.
+Which two groups should you create? .
+
+an Office 365 group that uses the Assigned membership type
+an Office 365 group that uses the Dynamic User membership type
+
+On-premise Active Directory, the user needs to have Enterprise Admin privileges.
+
+User administrator – can create and manage users and groups, and can reset passwords for users, Helpdesk administrators and User administrators.
+User Access Administrator – No access to the resource except the ability to change the access control.
+Adding a group to an administrative unit brings the group itself into the management scope of the administrative unit, but not the members of the group
+You can have Administrative Units and assign the administrators privilege over each unit. You can have one unit for each office.
+You just need to specify the user principal name for each user in the list when submitted for the Bulk delete operation.
+
+In Entra ID, licenses can be assigned both to individual users and to groups. Licenses are not automatically provisioned for every user upon creation. Users can also have multiple licenses.
+License cannot be assigned to a user without a usage location specified.
+===============================================
 application gateway for public, load balance for private
 
 nic, nsg ,vnet , vm,vmss should be in same region and subsrctiption  (differnet rg can work )
 
-
 one virtual hub per region
-
-SAS tokens are typically used for blobs, queues, and tables, and stored access policies are specifically for controlling the start time, expiry time, and permissions for SAS tokens.
-
-for administrator , password reset policy is differnet : The two-gate policy requires two pieces of authentication data, such as an email address, authenticator app, or a phone number, and it prohibits security questions. Office and mobile voice calls are also prohibited for trial or free versions of Microsoft Entra ID.
 
 low priority vms , standard load balancer and scale set cannot be moved to other regions , 
 You cannot assign a Basic SKU IP address to a Standard Load Balancer
@@ -69,15 +112,11 @@ To provide the ability to add the backend pool,health probe the user must have t
 2. Floating IP must be enabled if you need more than one HA port front end for the same back-end pool.
 3. Two backend pools are needed since there are two services.
 
-Microsoft Entra authentication allows users to connect to Azure using their Microsoft Entra credentials. Native Microsoft Entra authentication is only supported for OpenVPN protocol and also requires the use of the Azure VPN Client. The supported client operation systems are Windows 10 or later and macOS.
-
-
 Azure container app for :
 Deploying API endpoints
 Hosting background processing jobs
 Handling event-driven processing
 Running microservices
-
 
 The correct order of steps as follows:
 Create an Azure container registry.
@@ -86,36 +125,29 @@ Configure container registry settings.
 Set up authentication and security.
 Access and manage container images.
 
+kubenet : metro : pods have differnet ips that the vnet ,
+azure cni : highways : pods have same ips from the vnet ,
+If the cluster is using kubenet as the underlying network layer, then you can use Calico Network Policies to restrict traffic between pods.
+set-azakscluster
+az-aks command to autoscale
+kubectl autoscale deployment azure-vote-front –cpu-percent=50 –min=3 –max=10
+Use the az aks update command to enable and configure the cluster autoscaler on the node pool for the existing cluster.
+Set-AzAks  :Creates or updates a Kubernetes cluster
+First push the application image to the container registry. Then you can deploy the container on the cluster based on the image stored in the container registry.
+
 
 Use az network private-endpoint-connection approve to approve a private endpoint connection.
-
-Azure AD Connect should be installed on a domain joined member server and not on a domain controller.
-
-Add "https://autologon.microsoftazuread-sso.com" to the Intranet zone settings by using Group Policy in Active Directory
-
-You can set an expiration policy only for Office 365 groups in Azure Active Directory
 
 You can  detach the data disks and attach them to another VM without stopping either of the VMs.
 new-azdiskconfig
 new-azdisk
 
 
- SLA of 99.5% uptime,  combination of Azure Managed Disks and Azure availability sets
- SLA of 99.95% uptime,   Azure availability sets
- SLA of 99.99% uptime,   multiple availability zone
+SLA of 99.5% uptime,  combination of Azure Managed Disks and Azure availability sets ????
+SLA of 99.95% uptime,   Azure availability sets
+SLA of 99.99% uptime,   multiple availability zone
  
- To create a VM in an availability zone, we must use managed disks. 
- 
- 
-Global Administrator is automatically assigned to whoever creates the tenant first
- only Global Administrator accounts can install and configure health agents
- 
-You plan to grant three users named User1, User2, and User3 access to a temporary Microsoft SharePoint document library named Library1.
-You need to create groups for the users. The solution must ensure that the groups are deleted automatically after 180 days.
-Which two groups should you create? .
-
-an Office 365 group that uses the Assigned membership type
-an Office 365 group that uses the Dynamic User membership type
+To create a VM in an availability zone, we must use managed disks. 
 
 read : Microsoft.Authorization/*/read
 Microsoft.Authorization/
@@ -125,36 +157,34 @@ enable collection of guest OS diagnostics data = to collect data on the performa
 
 Cloud-init is a widely used approach to customize a Linux VM as it boots for the first time. You can use cloud-init to install packages and write files, or to configure users and security. As cloud-init runs during the initial boot process,
 The Linux Diagnostic Extension helps a user monitor the health of a Linux VM running on Microsoft Azure. 
-You can then use the az vm create command for the deployment of the virtual machine
 
+You can then use the az vm create command for the deployment of the virtual machine
 
 scaleset for new vm capacity :
 az vmss scale --resource-group "skillcertpro-rg" --name skillcertproet --new-capacity 4
 Deploy one virtual machine scale set that is set to ScaleSetVM orchestration mode.
 
-
- Upload a configuration to Azure Automation State Configuration. Compile a configuration into a node configuration. Onboard the virtual machines to Azure State Configuration. Assign the node configuration. Check the compliance status of the node.
+Upload a configuration to Azure Automation State Configuration. 
+Compile a configuration into a node configuration. 
+Onboard the virtual machines to Azure State Configuration. 
+Assign the node configuration. 
+Check the compliance status of the node.
  
-Site-to-Site VPN connection : local network gateway : address range will be on prem ip
 Site to Site VPN connections provide connectivity between an On-prem network and Azure Virtual Network using an encrypted tunnel over the public internet
+Site-to-Site VPN connection : local network gateway : address range will be on prem ip
 site -site :
 1) Create a gateway subnet
-
 2) Create a local network gateway
-
 3) Create a virtual network gateway
-
 4) Create the VPN connection
 
 vnet to on prem site to site :
- Create a connection
- Create a local site VPN gateway
- Create a VPN gateway that uses the VpnGw1 SKU
+Create a local site VPN gateway
+Create a VPN gateway that uses the VpnGw1 SKU
+Create a connection
 
 point-site : If you make a change to the azure vnet, VPN client packages must be reinstalled again on on prem
 point -s ite : We need to setup a RouteBased VPN. An Azure Vnet gateway type cannot be changed from policy-based to route-based or the other way. The gateway must be deleted and recreated, a process taking around 60 minutes.
- 
-On-premise Active Directory, the user needs to have Enterprise Admin privileges.
   
 file recovery steps from azure to on prem:
 1.First choose File Recovery
@@ -164,19 +194,14 @@ file recovery steps from azure to on prem:
 
 192.169.3.1/24 : u cannot change first 24 bits in this submet
 nsg : first subnet , then NIC
- Ideally we should have separate subnet for each tier with in a virtual network.
+Ideally we should have separate subnet for each tier with in a virtual network.
 ASGs is typically associated with NSGs.
+A service tag represents a group of IP address prefixes from a given Azure service.
 
 A VM can only be added to an availability set when it is created
- the virtual machine contributor role will give permissions to the user to add the disks to the machine.
+the virtual machine contributor role will give permissions to the user to add the disks to the machine.
 VM you wish to resize is part of an availability set, then you must stop all VMs in the availability set
 Microsoft does not support moving VMs between virtual networks. So, we have delete the VM and create a new VM in target VNet.
-
-User administrator – can create and manage users and groups, and can reset passwords for users, Helpdesk administrators and User administrators.
-User Access Administrator – No access to the resource except the ability to change the access control.
-Adding a group to an administrative unit brings the group itself into the management scope of the administrative unit, but not the members of the group
-You can have Administrative Units and assign the administrators privilege over each unit. You can have one unit for each office.
-You just need to specify the user principal name for each user in the list when submitted for the Bulk delete operation.
 
 We can enable encryption on a running IaaS virtual machine in Azure.
 
@@ -187,16 +212,13 @@ ADE uses DM-Crypt for Linux-based VMs.
 ADE uses BitLocker for Windows VM-controlled disks.
 
 configure ADE for VM:
- Create an Azure Key Vault 
- Set the Key Vault access policy to Enable access to Azure Disk Encryption for volume encryption
- Run the Set-AzVMDiskEncryptionExtension cmdlet
-
-A service tag represents a group of IP address prefixes from a given Azure service.
+Create an Azure Key Vault 
+Set the Key Vault access policy to Enable access to Azure Disk Encryption for volume encryption
+Run the Set-AzVMDiskEncryptionExtension cmdlet
 
 Each resource or resource group can indeed have a maximum of 50 tag name/value pairs.
 
 organise resourses for cost reporting : Subscriptions, resource groups, and tags
-
 
 before you can delete a recovery services vault,  you need to stop the backup and delete the backup data. , 
 you cant delete a recovery services vault, having registered storage accounts.,protected data sources (f, IaaS VMs, SQL databases, or Azure file shares).
@@ -209,6 +231,7 @@ you can add exclusions at the resource level
 
 policy exection sequuence : disable,modify,deny,audit
 Azure Policy definitions have modes like 'Indexed' and 'All'. There isn't a mode called 'DoNotAllow'.
+
 New-AzNetworkSecurityRuleConfig 
 New-AzNetworkSecurityGroup`
 Set-AzStorageBlobContent
@@ -228,16 +251,13 @@ Azure Monitor Agent (AMA) replaces the Log Analytics agent (also known as MMA an
 default frequency of collecting platform metrics : 1 minute
 
 data collect rule: 
-sorce VM only , destination : log analytic workspace only
+source : VM only , destination : log analytic workspace only
 
 Azure Monitor Log Analytics allows you to query and analyze detailed records from various sources, making it suitable for analyzing system updates across VMs.
 
-1 azure bastion is enough fro all virtual networks connected
+1 azure bastion is enough for all virtual networks connected
 
 The Azure Backup vault was an older construct and has been superseded by the Recovery Services vault.
-
-In Entra ID, licenses can be assigned both to individual users and to groups. Licenses are not automatically provisioned for every user upon creation. Users can also have multiple licenses.
-License cannot be assigned to a user without a usage location specified.
 
 bicep:
 1.Azure CLI can be used to directly convert ARM template JSON files to Bicep files.
@@ -260,28 +280,8 @@ When deploying a virtual machine from a saved template, you must specify the Res
 
 to export deployment template using powershell : Save-AzResourceGroupDeploymentTemplate 
 
-
 Once you add a cloud endpoint to a Sync group, you can’t add any other shares as the cloud endpoint.
 Once you add a server as a server endpoint with a particular file path, you can’t add the server as another endpoint with another path.
-
-you can’t enable Multi-Factor authentication for external users. There is no dependency as such on the phone numbers. : can be added in latest
-Microsoft Entra B2B collaboration allows organizations to work with external users by inviting them to their Microsoft Entra tenant
-access control -grant : ensure the setting of MFA
-condition section: location,platofrm,apps
-configure fraud alerts for spam mfa
-sms and autheticator app : both mfa and sspr
-how to configure sspr : 
-· Configure the required permissions for password writeback
-· Enable the password writeback option in Azure AD Connect
-· Enable password writeback in Azure AD SSPR
-
-You need to create a conditional access policy that requires all users to use multi-factor authentication when they access the Azure portal.:
- Users and Groups
- Cloud Apps
- Grant
-
-User2 is from Windows server active directory, you must use Windows Server Active Directory to update the identity,contact info, or job
-You can update usage location for all users. 
 
 You can use the Azure Site Recovery tool to move the servers to Azure.
 the replication type of the storage account can be changed to Zone redundant storage only if the current replication technique is either LRS or GRS.
@@ -295,9 +295,7 @@ From the Azure portal, create an import job
 Attach an external disk to Server1 and then run waimportexpot.exe
 From the Azure portal, update the import job
  
-
-For Azure Files, you can use Entra ID-based authentication (identity-based) and storage account keys.
-access keys + sas : files
+access keys +entra ID  + sas : files(access keys not recommended) for smb files : accesskeys+SAS , for rest files : entra ID  + sas ?????
 entra ID + SAS : blobs
 sas : premium file storage
 
@@ -313,18 +311,7 @@ For Azure Blob storage, you can only use Azure AD and Shared Access Signatures w
 Azure Files provides the capability to take snapshots of SMB file shares. Share snapshots capture the share state at that point in time.
 ra-grs does not support files
 grs gives :99.99% over a year
-
-
-kubenet : metro : pods have differnet ips that the vnet ,
-azure cni : highways : pods have same ips from the vnet ,
-If the cluster is using kubenet as the underlying network layer, then you can use Calico Network Policies to restrict traffic between pods.
-set-azakscluster
-az-aks command to autoscale
-First push the application image to the container registry. Then you can deploy the container on the cluster based on the image stored in the container registry.
-kubectl autoscale deployment azure-vote-front –cpu-percent=50 –min=3 –max=10
-Use the az aks update command to enable and configure the cluster autoscaler on the node pool for the existing cluster.
-Set-AzAks  :Creates or updates a Kubernetes cluster
-
+SAS tokens are typically used for blobs, queues, and tables, and stored access policies are specifically for controlling the start time, expiry time, and permissions for SAS tokens.
 
 look back window over which metric values are checked, while configuring a static threshold metric alert rule ? : period
  
@@ -336,7 +323,7 @@ subnet can be created ,if policy is applied on virtual netwrok
 
 1 region : multiple datacentre
 avaiblity set in one datacentre only
-one avialbility zone : accross locations in one datacentre
+one avialbility zone : accross locations in one datacentre(not used )
 multiple avialbility zone : accross different datacentres, in one region
 
 You can have up to 3 fault domains.(minimum 2)
@@ -356,26 +343,27 @@ IP flow verify :allows you to detect traffic filtering issues at a virtual machi
 ip flow : capability enables you to specify a source and destination IPv4 address, port, protocol (TCP or UDP), and traffic direction (inbound or outbound) If the connection fails, IP flow verify tells you which security rule allowed or denied the communication.
 IP flow  verify : checks if a packet is allowed or denied to or from a virtual machine. The information consists of direction, protocol, local IP, remote IP, local port, and a remote port. If the packet is denied by a security group, the name of the rule that denied the packet is returned.
 
+NSG diagnostics : allows you to detect traffic filtering issues at a virtual machine, virtual machine scale set, or application gateway level.
 
-NSG diagnostics allows you to detect traffic filtering issues at a virtual machine, virtual machine scale set, or application gateway level.
-Next hop helps you verify traffic routes and detect routing issues.
+Next hop : helps you verify traffic routes and detect routing issues.
 
 Connection troubleshoot enables a one-time connectivity and latency check between a virtual machine and Bastion host, application gateway, or another virtual machine.
 
-Packet capture enables you to capture your virtual machine traffic.
+Packet capture : enables you to capture your virtual machine traffic.
 
-VPN troubleshoot runs multiple diagnostics checks on your VPN gateways and connections to help debug issues.
+VPN troubleshoot : runs multiple diagnostics checks on your VPN gateways and connections to help debug issues.
 
 Traffic
 NSG flow logs and VNet flow logs (preview) : allow you to log network traffic passing through your network security groups (NSGs) and virtual networks respectively.
 
 Traffic analytics: processes your NSG flow log data enabling you to visualize, query, analyze, and understand your network traffic.
 
-connection troubleshoot : from one vm to another at a particular time
-
 Network Performance Monitor: latency between your on-premises network and the virtual machines.
 
-To record the successful and failed connection requests, we should use Azure Network Watcher flow logs. First, we can enable Network Watcher in the region of our choice and then use the Azure Network Watcher flow logs.The flow logs are then written to a storage account
+You need to record all the successful and failed connection attempts to VM1."
+Enable Azure Network Watcher flow logs.
+Enable Azure Network Watcher in the East US Azure region.
+Create an Azure Storage account.
 
 The performance diagnostics tool helps you troubleshoot performance issues that can affect a Windows or Linux virtual machine (VM). Supported troubleshooting scenarios include quick checks on known issues and best practices, and complex problems that involve slow VM performance or high usage of CPU, disk space, or memory.
 It Checks for known issues, analyzes best practices, and collects diagnostics data and captures a network trace and SMB counters.
@@ -399,13 +387,6 @@ You create an Azure Log Analytics workspace and configure the data settings. You
 
 In order for a user to be allowed to enable Traffic Analytics for an Azure subscription, the user must have one of the following roles assigned at the subscription level: owner, contributor, reader, or network contributor.
 
-You need to record all the successful and failed connection attempts to VM1."
- Enable Azure Network Watcher flow logs.
- Enable Azure Network Watcher in the East US Azure region.
- Create an Azure Storage account.
- 
-Your account must have any one of the following Azure roles at the subscription scope: owner, contributor, reader, or network contributor to enable traffic analytics.
-
 route table :
 Address prefix – Classless Inter-Domain Routing (CIDR) notation that you want to route traffic to. In this case, Vnet 1
 Next Hop is the VM1. So, it is Virtual Appliance
@@ -413,12 +394,9 @@ Assignment – This route is to be followed by Gateway Subnet for the incoming t
 
 Live metrics stream in application insights includes such information as the number of incoming requests, the duration of those requests, and any failures that occur. You can also inspect critical performance metrics such as processor and memory.
 
-
 You have an Azure virtual network named VNet1 that connects to your on-premises network by using a site-to-site VPN. VNet1 contains one subnet named Sunet1.
 Subnet1 is associated to a network security group (NSG) named NSG1. Subnet1 contains a basic internal load balancer named ILB1. ILB1 has three Azure virtual machines in the backend pool.
 You need to collect data about the IP addresses that connects to ILB1. You must be able to run interactive queries from the Azure portal against the collected data.
 What should you do? (SELECT TWO)
-
-
- Resource to create - An Azure Storage account
- Resource on which to enable diagnostics - NSG1
+Resource to create - An Azure Storage account
+Resource on which to enable diagnostics - NSG1
