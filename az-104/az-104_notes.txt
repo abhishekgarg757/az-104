@@ -7,14 +7,12 @@ When mapping a custom domain to an Azure Web App, you typically use a CNAME reco
 You can turn on Web Server Logging. This will give a detail of all of the web server requests being made to the Azure Web App
 You scale up by changing the pricing tier of the App Service plan that your app belongs to.
 Scale out: Increase the number of VM instances that run your app.
- 
 The I1 SKU allows your app to run on dedicated hardware, and also provides network isolation on top of compute isolation to protect your app. It also provides the maximum scale-out capabilities.
 
-If you create a DNS zone in Azure, then you need to first make a note of the Name servers for the DNS zone. Then go to your DNS provider and enter the Name servers for your Domain.
 azure dns zone : Manage and host your registered domain and associated records.
-
+If you create a DNS zone in Azure, then you need to first make a note of the Name servers for the DNS zone. Then go to your DNS provider and enter the Name servers for your Domain.
 Azure DNS supports importing and exporting zone files by using the Azure command-line interface (CLI)
->﻿
+
 Add a custom domain to your Azure
 Create a CNAME DNS record.
 Associate the custom domain with your CDN endpoint.
@@ -40,6 +38,9 @@ This is a privileged role. Users in this role can enable, disable, and delete de
 user adiminstration cannot add regisrterd/joined devices to any group
  
 User Administrator role assigned cannot add security questions, but only users with Global Administrator role can access and setup Azure Active Directory Self Service Password Reset,
+
+Global Administrator is automatically assigned to whoever creates the tenant first
+only Global Administrator accounts can install and configure health agents
 
 To add or delete users from your Azure Active Directory (Azure AD) organization, you must be a User administrator or Global Administrator.
 But only the user who creates a new tenant is added to it, and assigned the Global Administrator role.
@@ -75,9 +76,6 @@ Azure AD Connect should be installed on a domain joined member server and not on
 Add "https://autologon.microsoftazuread-sso.com" to the Intranet zone settings by using Group Policy in Active Directory
 
 You can set an expiration policy only for Office 365 groups in Azure Active Directory
- 
-Global Administrator is automatically assigned to whoever creates the tenant first
-only Global Administrator accounts can install and configure health agents
  
 You plan to grant three users named User1, User2, and User3 access to a temporary Microsoft SharePoint document library named Library1.
 You need to create groups for the users. The solution must ensure that the groups are deleted automatically after 180 days.
@@ -128,13 +126,12 @@ Access and manage container images.
 kubenet : metro : pods have differnet ips that the vnet ,
 azure cni : highways : pods have same ips from the vnet ,
 If the cluster is using kubenet as the underlying network layer, then you can use Calico Network Policies to restrict traffic between pods.
-set-azakscluster
 az-aks command to autoscale
 kubectl autoscale deployment azure-vote-front –cpu-percent=50 –min=3 –max=10
 Use the az aks update command to enable and configure the cluster autoscaler on the node pool for the existing cluster.
 Set-AzAks  :Creates or updates a Kubernetes cluster
 First push the application image to the container registry. Then you can deploy the container on the cluster based on the image stored in the container registry.
-
+set-azakscluster
 
 Use az network private-endpoint-connection approve to approve a private endpoint connection.
 
@@ -405,8 +402,8 @@ az-104
 theory and labs : 
 
 Alan Rodrigues udemy(25 hours) : must do , two times if get time 
-susanth sutheesh az-104 you tube : optional
 revision : john savilaz-104 you tube : must do one before cert
+susanth sutheesh az-104 you tube : optional
 plural sight az-104 (36 hours) : optional
 microsoft documentation: optional
 
@@ -417,6 +414,8 @@ labs are optional
 Tests: 
 Skillcertpro must do all tests , perfrom two frsh tests on the day of certification also 
 : 757
+must do 2 udemy practice tests in the course by  : Ravikiran Srinivasulu ([PRACTICE TEST] AZ-104 Microsoft Azure Administrator w/ Labs)
+include exam topics practice tests or buy it (must)
 
 whizlab tests : must  :
 https://www.whizlabs.com/learn/course/microsoft-azure-certification-az-104/298/pt
